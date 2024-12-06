@@ -38,7 +38,7 @@ class Assembler:
 
         a, b, c = self.paginate(a, 3), self.paginate(b, 7), self.paginate(c, 11)
         text = a + b + c + "0" * 43
-        print(len(text))
+        
         return int(text, 2).to_bytes(8, "big")
 
     def bin_read(self, a: int, b: int, c: int) -> bytes:
@@ -46,7 +46,7 @@ class Assembler:
 
         a, b, c = self.paginate(a, 3), self.paginate(b, 7), self.paginate(c, 7)
         text = a + b + c + "0" * 47
-        print(len(text))
+        
         return int(text, 2).to_bytes(8, "big")
 
     def bin_shift(self, a: int, b: int, c: int):
@@ -54,7 +54,7 @@ class Assembler:
 
         a, b, c = self.paginate(a, 3), self.paginate(b, 7), self.paginate(c, 7)
         text = a + b + c + "0" * 47
-        print(len(text))
+        
         return int(text, 2).to_bytes(8, "big")
 
     def bin_popcnt(self, a: int, b: int, c: int) -> bytes:
@@ -62,7 +62,7 @@ class Assembler:
 
         a, b, c = self.paginate(a, 3), self.paginate(b, 24), self.paginate(c, 7)
         text = a + b + c + "0" * 30
-        print(text)
+        
         return int(text, 2).to_bytes(8, "big")
 
     def log(self, text: dict, method="last"):
@@ -149,12 +149,13 @@ class Interpreter:
 
     def run(self):
         bits = bin(int.from_bytes(self.BINARY))[2:]
-        print(len(bits))
-        print(bits)
+        if len(bits) % 8 !=0:
+            bits = "0" * (8-len(bits) % 8) + bits
         commands = [bits[i:i+8*8] for i in range(0, len(bits), 8*8)]
 
         for command in commands:
-            print(command)
+            if len(command) < 8:
+                command = "0"*(8-len(command)) + command
             command_type = command[0:3]
             if command_type == "001":
                 address = int(command[3:10], 2)
@@ -168,6 +169,8 @@ class Interpreter:
             elif command_type == "111":
                 address1 = int(command[3:10], 2)
                 address2 = int(command[10:17])
+                print(command)
+                print(address1,address2)
                 self.MEMORY[address1] = address2
 
             elif command_type == "101":
@@ -179,6 +182,7 @@ class Interpreter:
         self.log_result()
 
     def log_result(self):
+        print(self.MEMORY)
         data = []
         for i in range(len(self.MEMORY)):
             data.append({"0b" + bin(i)[2:].zfill(4): self.MEMORY[i]})
