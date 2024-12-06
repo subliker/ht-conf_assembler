@@ -1,0 +1,9 @@
+set a0 0
+set a1 1
+set a3 42
+
+mov test a3
+write a0 a3
+
+popcnt test a0
+popcnt test a1
