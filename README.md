@@ -52,3 +52,11 @@ A B C
 записать в исходный вектор.
 
 # Тестирование
+Запуск:\
+![image](https://github.com/user-attachments/assets/7ed8ab2c-1e8f-4ebc-906b-65176b039daf)\
+Входные данные:\
+![image](https://github.com/user-attachments/assets/b3ba06d2-a018-46cb-807f-7c46dc7ac814)\
+Логи:\
+![image](https://github.com/user-attachments/assets/212d9e46-c3a1-4928-977c-aed88e7b7c8f)\
+Результат:\
+![image](https://github.com/user-attachments/assets/71975d12-6236-4b48-a974-330d7ff9f625)\
